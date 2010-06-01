@@ -1,0 +1,263 @@
+# Translation of the WordPress plugin TextPattern Importer 0.2 by wordpressdotorg.
+# Copyright (C) 2010 wordpressdotorg
+# This file is distributed under the same license as the TextPattern Importer package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: TextPattern Importer 0.2\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/textpattern-importer\n"
+"POT-Creation-Date: 2010-06-01 13:26+0300\n"
+"PO-Revision-Date: 2010-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: textpattern-importer.php:74
+msgid "Import Textpattern"
+msgstr ""
+
+#: textpattern-importer.php:75
+msgid ""
+"Steps may take a few minutes depending on the size of your database. Please "
+"be patient."
+msgstr ""
+
+#: textpattern-importer.php:85
+msgid ""
+"Howdy! This imports categories, users, posts, comments, and links from any "
+"Textpattern 4.0.2+ into this site."
+msgstr ""
+
+#: textpattern-importer.php:86
+msgid ""
+"This has not been tested on previous versions of Textpattern.  Mileage may "
+"vary."
+msgstr ""
+
+#: textpattern-importer.php:87
+msgid "Your Textpattern Configuration settings are as follows:"
+msgstr ""
+
+#: textpattern-importer.php:91
+msgid "Import"
+msgstr ""
+
+#: textpattern-importer.php:198
+msgid "Importing Categories..."
+msgstr ""
+
+#: textpattern-importer.php:222
+#, php-format
+msgid "Done! <strong>%1$s</strong> category imported."
+msgid_plural "Done! <strong>%1$s</strong> categories imported."
+msgstr[0] ""
+msgstr[1] ""
+
+#: textpattern-importer.php:225
+msgid "No Categories to Import!"
+msgstr ""
+
+#: textpattern-importer.php:239
+msgid "Importing Users..."
+msgstr ""
+
+#: textpattern-importer.php:294
+#, php-format
+msgid "Done! <strong>%1$s</strong> users imported."
+msgstr ""
+
+#: textpattern-importer.php:298
+msgid "No Users to Import!"
+msgstr ""
+
+#: textpattern-importer.php:314
+msgid "Importing Posts..."
+msgstr ""
+
+#: textpattern-importer.php:388
+#, php-format
+msgid "Done! <strong>%1$s</strong> posts imported."
+msgstr ""
+
+#: textpattern-importer.php:403
+msgid "Importing Comments..."
+msgstr ""
+
+#: textpattern-importer.php:446
+#, php-format
+msgid "Done! <strong>%1$s</strong> comments imported."
+msgstr ""
+
+#: textpattern-importer.php:449
+msgid "No Comments to Import!"
+msgstr ""
+
+#: textpattern-importer.php:462
+msgid "Importing Links..."
+msgstr ""
+
+#: textpattern-importer.php:498
+#, php-format
+msgid "Done! <strong>%s</strong> link imported"
+msgid_plural "Done! <strong>%s</strong> links imported"
+msgstr[0] ""
+msgstr[1] ""
+
+#: textpattern-importer.php:502
+msgid "No Links to Import!"
+msgstr ""
+
+#: textpattern-importer.php:517
+msgid "Import Users"
+msgstr ""
+
+#: textpattern-importer.php:530
+msgid "Import Posts"
+msgstr ""
+
+#: textpattern-importer.php:544
+msgid "Import Comments"
+msgstr ""
+
+#: textpattern-importer.php:556
+msgid "Import Links"
+msgstr ""
+
+#: textpattern-importer.php:569
+msgid "Finish"
+msgstr ""
+
+#: textpattern-importer.php:592
+msgid ""
+"Welcome to WordPress.  We hope (and expect!) that you will find this "
+"platform incredibly rewarding!  As a new WordPress user coming from "
+"Textpattern, there are some things that we would like to point out.  "
+"Hopefully, they will help your transition go as smoothly as possible."
+msgstr ""
+
+#: textpattern-importer.php:593
+msgid "Users"
+msgstr ""
+
+#: textpattern-importer.php:594
+#, php-format
+msgid ""
+"You have already setup WordPress and have been assigned an administrative "
+"login and password.  Forget it.  You didn&#8217;t have that login in "
+"Textpattern, why should you have it here?  Instead we have taken care to "
+"import all of your users into our system.  Unfortunately there is one "
+"downside.  Because both WordPress and Textpattern uses a strong encryption "
+"hash with passwords, it is impossible to decrypt it and we are forced to "
+"assign temporary passwords to all your users.  <strong>Every user has the "
+"same username, but their passwords are reset to password123.</strong>  So <a "
+"href=\"%1$s\">log in</a> and change it."
+msgstr ""
+
+#: textpattern-importer.php:595
+msgid "Preserving Authors"
+msgstr ""
+
+#: textpattern-importer.php:596
+msgid ""
+"Secondly, we have attempted to preserve post authors.  If you are the only "
+"author or contributor to your blog, then you are safe.  In most cases, we "
+"are successful in this preservation endeavor.  However, if we cannot "
+"ascertain the name of the writer due to discrepancies between database "
+"tables, we assign it to you, the administrative user."
+msgstr ""
+
+#: textpattern-importer.php:597
+msgid "Textile"
+msgstr ""
+
+#: textpattern-importer.php:598
+msgid ""
+"Also, since you&#8217;re coming from Textpattern, you probably have been "
+"using Textile to format your comments and posts.  If this is the case, we "
+"recommend downloading and installing <a href=\"http://www.huddledmasses.org/"
+"category/development/wordpress/textile/\">Textile for WordPress</a>.  Trust "
+"me... You&#8217;ll want it."
+msgstr ""
+
+#: textpattern-importer.php:599
+msgid "WordPress Resources"
+msgstr ""
+
+#: textpattern-importer.php:600
+msgid ""
+"Finally, there are numerous WordPress resources around the internet.  Some "
+"of them are:"
+msgstr ""
+
+#: textpattern-importer.php:602
+msgid "<a href=\"http://wordpress.org/\">The official WordPress site</a>"
+msgstr ""
+
+#: textpattern-importer.php:603
+msgid ""
+"<a href=\"http://wordpress.org/support/\">The WordPress support forums</a>"
+msgstr ""
+
+#: textpattern-importer.php:604
+msgid ""
+"<a href=\"http://codex.wordpress.org/\">The Codex (In other words, the "
+"WordPress Bible)</a>"
+msgstr ""
+
+#: textpattern-importer.php:606
+#, php-format
+msgid ""
+"That&#8217;s it! What are you waiting for? Go <a href=\"%1$s\">log in</a>!"
+msgstr ""
+
+#: textpattern-importer.php:612
+msgid "Textpattern Database User:"
+msgstr ""
+
+#: textpattern-importer.php:613
+msgid "Textpattern Database Password:"
+msgstr ""
+
+#: textpattern-importer.php:614
+msgid "Textpattern Database Name:"
+msgstr ""
+
+#: textpattern-importer.php:615
+msgid "Textpattern Database Host:"
+msgstr ""
+
+#: textpattern-importer.php:616
+msgid "Textpattern Table prefix (if any):"
+msgstr ""
+
+#: textpattern-importer.php:707
+msgid "TextPattern"
+msgstr ""
+
+#. #-#-#-#-#  textpattern-importer.pot (TextPattern Importer 0.2)  #-#-#-#-#
+#. Description of the plugin/theme
+#: textpattern-importer.php:707
+msgid ""
+"Import categories, users, posts, comments, and links from a TextPattern blog."
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "TextPattern Importer"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "http://wordpress.org/extend/plugins/textpattern-importer/"
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "wordpressdotorg"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://wordpress.org/"
+msgstr ""

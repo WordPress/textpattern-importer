@@ -71,8 +71,8 @@ class Textpattern_Import extends WP_Importer {
 	{
 		echo '<div class="wrap">';
 		screen_icon();
-		echo '<h2>'.__('Import Textpattern').'</h2>';
-		echo '<p>'.__('Steps may take a few minutes depending on the size of your database. Please be patient.').'</p>';
+		echo '<h2>'.__('Import Textpattern', 'textpattern-importer').'</h2>';
+		echo '<p>'.__('Steps may take a few minutes depending on the size of your database. Please be patient.', 'textpattern-importer').'</p>';
 	}
 
 	function footer()
@@ -82,13 +82,13 @@ class Textpattern_Import extends WP_Importer {
 
 	function greet() {
 		echo '<div class="narrow">';
-		echo '<p>'.__('Howdy! This imports categories, users, posts, comments, and links from any Textpattern 4.0.2+ into this site.').'</p>';
-		echo '<p>'.__('This has not been tested on previous versions of Textpattern.  Mileage may vary.').'</p>';
-		echo '<p>'.__('Your Textpattern Configuration settings are as follows:').'</p>';
+		echo '<p>'.__('Howdy! This imports categories, users, posts, comments, and links from any Textpattern 4.0.2+ into this site.', 'textpattern-importer').'</p>';
+		echo '<p>'.__('This has not been tested on previous versions of Textpattern.  Mileage may vary.', 'textpattern-importer').'</p>';
+		echo '<p>'.__('Your Textpattern Configuration settings are as follows:', 'textpattern-importer').'</p>';
 		echo '<form action="admin.php?import=textpattern&amp;step=1" method="post">';
 		wp_nonce_field('import-textpattern');
 		$this->db_form();
-		echo '<p class="submit"><input type="submit" name="submit" class="button" value="'.esc_attr__('Import').'" /></p>';
+		echo '<p class="submit"><input type="submit" name="submit" class="button" value="'.esc_attr__('Import', 'textpattern-importer').'" /></p>';
 		echo '</form>';
 		echo '</div>';
 	}
@@ -195,7 +195,7 @@ class Textpattern_Import extends WP_Importer {
 		// Do the Magic
 		if(is_array($categories))
 		{
-			echo '<p>'.__('Importing Categories...').'<br /><br /></p>';
+			echo '<p>'.__('Importing Categories...', 'textpattern-importer').'<br /><br /></p>';
 			foreach ($categories as $category)
 			{
 				$count++;
@@ -219,10 +219,10 @@ class Textpattern_Import extends WP_Importer {
 
 			// Store category translation for future use
 			add_option('txpcat2wpcat',$txpcat2wpcat);
-			echo '<p>'.sprintf(_n('Done! <strong>%1$s</strong> category imported.', 'Done! <strong>%1$s</strong> categories imported.', $count), $count).'<br /><br /></p>';
+			echo '<p>'.sprintf(_n('Done! <strong>%1$s</strong> category imported.', 'Done! <strong>%1$s</strong> categories imported.', $count, 'textpattern-importer'), $count).'<br /><br /></p>';
 			return true;
 		}
-		echo __('No Categories to Import!');
+		echo __('No Categories to Import!', 'textpattern-importer');
 		return false;
 	}
 
@@ -236,7 +236,7 @@ class Textpattern_Import extends WP_Importer {
 		// Midnight Mojo
 		if(is_array($users))
 		{
-			echo '<p>'.__('Importing Users...').'<br /><br /></p>';
+			echo '<p>'.__('Importing Users...', 'textpattern-importer').'<br /><br /></p>';
 			foreach($users as $user)
 			{
 				$count++;
@@ -291,11 +291,11 @@ class Textpattern_Import extends WP_Importer {
 			add_option('txpid2wpid',$txpid2wpid);
 
 
-			echo '<p>'.sprintf(__('Done! <strong>%1$s</strong> users imported.'), $count).'<br /><br /></p>';
+			echo '<p>'.sprintf(__('Done! <strong>%1$s</strong> users imported.', 'textpattern-importer'), $count).'<br /><br /></p>';
 			return true;
 		}// End if(is_array($users)
 
-		echo __('No Users to Import!');
+		echo __('No Users to Import!', 'textpattern-importer');
 		return false;
 
 	}// End function user2wp()
@@ -311,7 +311,7 @@ class Textpattern_Import extends WP_Importer {
 		// Do the Magic
 		if(is_array($posts))
 		{
-			echo '<p>'.__('Importing Posts...').'<br /><br /></p>';
+			echo '<p>'.__('Importing Posts...', 'textpattern-importer').'<br /><br /></p>';
 			foreach($posts as $post)
 			{
 				$count++;
@@ -385,7 +385,7 @@ class Textpattern_Import extends WP_Importer {
 		// Store ID translation for later use
 		add_option('txpposts2wpposts',$txpposts2wpposts);
 
-		echo '<p>'.sprintf(__('Done! <strong>%1$s</strong> posts imported.'), $count).'<br /><br /></p>';
+		echo '<p>'.sprintf(__('Done! <strong>%1$s</strong> posts imported.', 'textpattern-importer'), $count).'<br /><br /></p>';
 		return true;
 	}
 
@@ -400,7 +400,7 @@ class Textpattern_Import extends WP_Importer {
 		// Magic Mojo
 		if(is_array($comments))
 		{
-			echo '<p>'.__('Importing Comments...').'<br /><br /></p>';
+			echo '<p>'.__('Importing Comments...', 'textpattern-importer').'<br /><br /></p>';
 			foreach($comments as $comment)
 			{
 				$count++;
@@ -443,10 +443,10 @@ class Textpattern_Import extends WP_Importer {
 			get_comment_count($ret_id);
 
 
-			echo '<p>'.sprintf(__('Done! <strong>%1$s</strong> comments imported.'), $count).'<br /><br /></p>';
+			echo '<p>'.sprintf(__('Done! <strong>%1$s</strong> comments imported.', 'textpattern-importer'), $count).'<br /><br /></p>';
 			return true;
 		}
-		echo __('No Comments to Import!');
+		echo __('No Comments to Import!', 'textpattern-importer');
 		return false;
 	}
 
@@ -459,7 +459,7 @@ class Textpattern_Import extends WP_Importer {
 		// Deal with the links
 		if(is_array($links))
 		{
-			echo '<p>'.__('Importing Links...').'<br /><br /></p>';
+			echo '<p>'.__('Importing Links...', 'textpattern-importer').'<br /><br /></p>';
 			foreach($links as $link)
 			{
 				$count++;
@@ -495,11 +495,11 @@ class Textpattern_Import extends WP_Importer {
 			}
 			add_option('txplinks2wplinks',$txplinks2wplinks);
 			echo '<p>';
-			printf(_n('Done! <strong>%s</strong> link imported', 'Done! <strong>%s</strong> links imported', $count), $count);
+			printf(_n('Done! <strong>%s</strong> link imported', 'Done! <strong>%s</strong> links imported', $count, 'textpattern-importer'), $count);
 			echo '<br /><br /></p>';
 			return true;
 		}
-		echo __('No Links to Import!');
+		echo __('No Links to Import!', 'textpattern-importer');
 		return false;
 	}
 
@@ -514,7 +514,7 @@ class Textpattern_Import extends WP_Importer {
 
 		echo '<form action="admin.php?import=textpattern&amp;step=2" method="post">';
 		wp_nonce_field('import-textpattern');
-		printf('<p class="submit"><input type="submit" name="submit" class="button" value="%s" /></p>', esc_attr__('Import Users'));
+		printf('<p class="submit"><input type="submit" name="submit" class="button" value="%s" /></p>', esc_attr__('Import Users', 'textpattern-importer'));
 		echo '</form>';
 
 	}
@@ -527,7 +527,7 @@ class Textpattern_Import extends WP_Importer {
 
 		echo '<form action="admin.php?import=textpattern&amp;step=3" method="post">';
 		wp_nonce_field('import-textpattern');
-		printf('<p class="submit"><input type="submit" name="submit" class="button" value="%s" /></p>', esc_attr__('Import Posts'));
+		printf('<p class="submit"><input type="submit" name="submit" class="button" value="%s" /></p>', esc_attr__('Import Posts', 'textpattern-importer'));
 		echo '</form>';
 	}
 
@@ -541,7 +541,7 @@ class Textpattern_Import extends WP_Importer {
 
 		echo '<form action="admin.php?import=textpattern&amp;step=4" method="post">';
 		wp_nonce_field('import-textpattern');
-		printf('<p class="submit"><input type="submit" name="submit" class="button" value="%s" /></p>', esc_attr__('Import Comments'));
+		printf('<p class="submit"><input type="submit" name="submit" class="button" value="%s" /></p>', esc_attr__('Import Comments', 'textpattern-importer'));
 		echo '</form>';
 	}
 
@@ -553,7 +553,7 @@ class Textpattern_Import extends WP_Importer {
 
 		echo '<form action="admin.php?import=textpattern&amp;step=5" method="post">';
 		wp_nonce_field('import-textpattern');
-		printf('<p class="submit"><input type="submit" name="submit" class="button" value="%s" /></p>', esc_attr__('Import Links'));
+		printf('<p class="submit"><input type="submit" name="submit" class="button" value="%s" /></p>', esc_attr__('Import Links', 'textpattern-importer'));
 		echo '</form>';
 	}
 
@@ -566,7 +566,7 @@ class Textpattern_Import extends WP_Importer {
 
 		echo '<form action="admin.php?import=textpattern&amp;step=6" method="post">';
 		wp_nonce_field('import-textpattern');
-		printf('<p class="submit"><input type="submit" name="submit" class="button" value="%s" /></p>', esc_attr__('Finish'));
+		printf('<p class="submit"><input type="submit" name="submit" class="button" value="%s" /></p>', esc_attr__('Finish', 'textpattern-importer'));
 		echo '</form>';
 	}
 
@@ -589,31 +589,31 @@ class Textpattern_Import extends WP_Importer {
 
 	function tips()
 	{
-		echo '<p>'.__('Welcome to WordPress.  We hope (and expect!) that you will find this platform incredibly rewarding!  As a new WordPress user coming from Textpattern, there are some things that we would like to point out.  Hopefully, they will help your transition go as smoothly as possible.').'</p>';
-		echo '<h3>'.__('Users').'</h3>';
-		echo '<p>'.sprintf(__('You have already setup WordPress and have been assigned an administrative login and password.  Forget it.  You didn&#8217;t have that login in Textpattern, why should you have it here?  Instead we have taken care to import all of your users into our system.  Unfortunately there is one downside.  Because both WordPress and Textpattern uses a strong encryption hash with passwords, it is impossible to decrypt it and we are forced to assign temporary passwords to all your users.  <strong>Every user has the same username, but their passwords are reset to password123.</strong>  So <a href="%1$s">log in</a> and change it.'), get_bloginfo( 'wpurl' ) . '/wp-login.php').'</p>';
-		echo '<h3>'.__('Preserving Authors').'</h3>';
-		echo '<p>'.__('Secondly, we have attempted to preserve post authors.  If you are the only author or contributor to your blog, then you are safe.  In most cases, we are successful in this preservation endeavor.  However, if we cannot ascertain the name of the writer due to discrepancies between database tables, we assign it to you, the administrative user.').'</p>';
-		echo '<h3>'.__('Textile').'</h3>';
-		echo '<p>'.__('Also, since you&#8217;re coming from Textpattern, you probably have been using Textile to format your comments and posts.  If this is the case, we recommend downloading and installing <a href="http://www.huddledmasses.org/category/development/wordpress/textile/">Textile for WordPress</a>.  Trust me... You&#8217;ll want it.').'</p>';
-		echo '<h3>'.__('WordPress Resources').'</h3>';
-		echo '<p>'.__('Finally, there are numerous WordPress resources around the internet.  Some of them are:').'</p>';
+		echo '<p>'.__('Welcome to WordPress.  We hope (and expect!) that you will find this platform incredibly rewarding!  As a new WordPress user coming from Textpattern, there are some things that we would like to point out.  Hopefully, they will help your transition go as smoothly as possible.', 'textpattern-importer').'</p>';
+		echo '<h3>'.__('Users', 'textpattern-importer').'</h3>';
+		echo '<p>'.sprintf(__('You have already setup WordPress and have been assigned an administrative login and password.  Forget it.  You didn&#8217;t have that login in Textpattern, why should you have it here?  Instead we have taken care to import all of your users into our system.  Unfortunately there is one downside.  Because both WordPress and Textpattern uses a strong encryption hash with passwords, it is impossible to decrypt it and we are forced to assign temporary passwords to all your users.  <strong>Every user has the same username, but their passwords are reset to password123.</strong>  So <a href="%1$s">log in</a> and change it.', 'textpattern-importer'), get_bloginfo( 'wpurl' ) . '/wp-login.php').'</p>';
+		echo '<h3>'.__('Preserving Authors', 'textpattern-importer').'</h3>';
+		echo '<p>'.__('Secondly, we have attempted to preserve post authors.  If you are the only author or contributor to your blog, then you are safe.  In most cases, we are successful in this preservation endeavor.  However, if we cannot ascertain the name of the writer due to discrepancies between database tables, we assign it to you, the administrative user.', 'textpattern-importer').'</p>';
+		echo '<h3>'.__('Textile', 'textpattern-importer').'</h3>';
+		echo '<p>'.__('Also, since you&#8217;re coming from Textpattern, you probably have been using Textile to format your comments and posts.  If this is the case, we recommend downloading and installing <a href="http://www.huddledmasses.org/category/development/wordpress/textile/">Textile for WordPress</a>.  Trust me... You&#8217;ll want it.', 'textpattern-importer').'</p>';
+		echo '<h3>'.__('WordPress Resources', 'textpattern-importer').'</h3>';
+		echo '<p>'.__('Finally, there are numerous WordPress resources around the internet.  Some of them are:', 'textpattern-importer').'</p>';
 		echo '<ul>';
-		echo '<li>'.__('<a href="http://wordpress.org/">The official WordPress site</a>').'</li>';
-		echo '<li>'.__('<a href="http://wordpress.org/support/">The WordPress support forums</a>').'</li>';
-		echo '<li>'.__('<a href="http://codex.wordpress.org/">The Codex (In other words, the WordPress Bible)</a>').'</li>';
+		echo '<li>'.__('<a href="http://wordpress.org/">The official WordPress site</a>', 'textpattern-importer').'</li>';
+		echo '<li>'.__('<a href="http://wordpress.org/support/">The WordPress support forums</a>', 'textpattern-importer').'</li>';
+		echo '<li>'.__('<a href="http://codex.wordpress.org/">The Codex (In other words, the WordPress Bible)</a>', 'textpattern-importer').'</li>';
 		echo '</ul>';
-		echo '<p>'.sprintf(__('That&#8217;s it! What are you waiting for? Go <a href="%1$s">log in</a>!'), get_bloginfo( 'wpurl' ) . '/wp-login.php').'</p>';
+		echo '<p>'.sprintf(__('That&#8217;s it! What are you waiting for? Go <a href="%1$s">log in</a>!', 'textpattern-importer'), get_bloginfo( 'wpurl' ) . '/wp-login.php').'</p>';
 	}
 
 	function db_form()
 	{
 		echo '<table class="form-table">';
-		printf('<tr><th scope="row"><label for="dbuser">%s</label></th><td><input type="text" name="dbuser" id="dbuser" /></td></tr>', __('Textpattern Database User:'));
-		printf('<tr><th scope="row"><label for="dbpass">%s</label></th><td><input type="password" name="dbpass" id="dbpass" /></td></tr>', __('Textpattern Database Password:'));
-		printf('<tr><th scope="row"><label for="dbname">%s</label></th><td><input type="text" id="dbname" name="dbname" /></td></tr>', __('Textpattern Database Name:'));
-		printf('<tr><th scope="row"><label for="dbhost">%s</label></th><td><input type="text" id="dbhost" name="dbhost" value="localhost" /></td></tr>', __('Textpattern Database Host:'));
-		printf('<tr><th scope="row"><label for="dbprefix">%s</label></th><td><input type="text" name="dbprefix" id="dbprefix"  /></td></tr>', __('Textpattern Table prefix (if any):'));
+		printf('<tr><th scope="row"><label for="dbuser">%s</label></th><td><input type="text" name="dbuser" id="dbuser" /></td></tr>', __('Textpattern Database User:', 'textpattern-importer'));
+		printf('<tr><th scope="row"><label for="dbpass">%s</label></th><td><input type="password" name="dbpass" id="dbpass" /></td></tr>', __('Textpattern Database Password:', 'textpattern-importer'));
+		printf('<tr><th scope="row"><label for="dbname">%s</label></th><td><input type="text" id="dbname" name="dbname" /></td></tr>', __('Textpattern Database Name:', 'textpattern-importer'));
+		printf('<tr><th scope="row"><label for="dbhost">%s</label></th><td><input type="text" id="dbhost" name="dbhost" value="localhost" /></td></tr>', __('Textpattern Database Host:', 'textpattern-importer'));
+		printf('<tr><th scope="row"><label for="dbprefix">%s</label></th><td><input type="text" name="dbprefix" id="dbprefix"  /></td></tr>', __('Textpattern Table prefix (if any):', 'textpattern-importer'));
 		echo '</table>';
 	}
 
@@ -704,6 +704,11 @@ class Textpattern_Import extends WP_Importer {
 
 $txp_import = new Textpattern_Import();
 
-register_importer('textpattern', __('TextPattern'), __('Import categories, users, posts, comments, and links from a TextPattern blog.'), array ($txp_import, 'dispatch'));
+register_importer('textpattern', __('TextPattern', 'textpattern-importer'), __('Import categories, users, posts, comments, and links from a TextPattern blog.', 'textpattern-importer'), array ($txp_import, 'dispatch'));
 
 } // class_exists( 'WP_Importer' )
+
+function textpattern_importer_init() {
+    load_plugin_textdomain( 'textpattern-importer', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+}
+add_action( 'init', 'textpattern_importer_init' );
