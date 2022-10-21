@@ -695,11 +695,6 @@ class Textpattern_Import extends WP_Importer {
 
 		$this->footer();
 	}
-
-	function Textpattern_Import()
-	{
-		// Nothing.
-	}
 }
 
 $txp_import = new Textpattern_Import();
