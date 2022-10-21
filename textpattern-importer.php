@@ -98,7 +98,6 @@ class Textpattern_Import extends WP_Importer {
 		global $wpdb;
 		// General Housekeeping
 		$txpdb = new wpdb(get_option('txpuser'), get_option('txppass'), get_option('txpname'), get_option('txphost'));
-		set_magic_quotes_runtime(0);
 		$prefix = get_option('tpre');
 
 		// Get Categories
@@ -116,7 +115,6 @@ class Textpattern_Import extends WP_Importer {
 		global $wpdb;
 		// General Housekeeping
 		$txpdb = new wpdb(get_option('txpuser'), get_option('txppass'), get_option('txpname'), get_option('txphost'));
-		set_magic_quotes_runtime(0);
 		$prefix = get_option('tpre');
 
 		// Get Users
@@ -134,7 +132,6 @@ class Textpattern_Import extends WP_Importer {
 	{
 		// General Housekeeping
 		$txpdb = new wpdb(get_option('txpuser'), get_option('txppass'), get_option('txpname'), get_option('txphost'));
-		set_magic_quotes_runtime(0);
 		$prefix = get_option('tpre');
 
 		// Get Posts
@@ -161,18 +158,16 @@ class Textpattern_Import extends WP_Importer {
 		global $wpdb;
 		// General Housekeeping
 		$txpdb = new wpdb(get_option('txpuser'), get_option('txppass'), get_option('txpname'), get_option('txphost'));
-		set_magic_quotes_runtime(0);
 		$prefix = get_option('tpre');
 
 		// Get Comments
 		return $txpdb->get_results('SELECT * FROM '.$prefix.'txp_discuss', ARRAY_A);
 	}
 
-		function get_txp_links()
+	function get_txp_links()
 	{
 		//General Housekeeping
 		$txpdb = new wpdb(get_option('txpuser'), get_option('txppass'), get_option('txpname'), get_option('txphost'));
-		set_magic_quotes_runtime(0);
 		$prefix = get_option('tpre');
 
 		return $txpdb->get_results('SELECT
