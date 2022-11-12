@@ -1,10 +1,10 @@
 === Plugin Name ===
 Contributors: wordpressdotorg
-Donate link: 
+Donate link:
 Tags: importer, textpattern
 Requires at least: 3.0
-Tested up to: 4.1
-Stable tag: trunk
+Tested up to: 6.1
+Stable tag: 0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -25,6 +25,15 @@ Import categories, users, posts, comments, and links from a TextPattern blog.
 == Screenshots ==
 
 == Changelog ==
+
+= 0.3 =
+* Fix: add support for PHP 7.2
+* Fix: remove call to `set_magic_quotes_runtime`
+
+= 0.2 =
+* Add WP_LOAD_IMPORTERS check
+* Add I18N for importers
+* Add license header
 
 = 0.1 =
 * Initial release
