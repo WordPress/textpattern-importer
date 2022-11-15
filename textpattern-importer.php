@@ -70,7 +70,11 @@ class Textpattern_Import extends WP_Importer {
 	function header()
 	{
 		echo '<div class="wrap">';
-		screen_icon();
+
+		if ( version_compare(get_bloginfo('version'), '3.8.0', '<') ) {
+			screen_icon();
+		}
+
 		echo '<h2>'.__('Import Textpattern', 'textpattern-importer').'</h2>';
 		echo '<p>'.__('Steps may take a few minutes depending on the size of your database. Please be patient.', 'textpattern-importer').'</p>';
 	}
