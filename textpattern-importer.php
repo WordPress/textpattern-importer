@@ -71,7 +71,7 @@ class Textpattern_Import extends WP_Importer {
 	{
 		echo '<div class="wrap">';
 
-		if ( version_compare(get_bloginfo('version'), '3.8.0', '<') ) {
+		if ( version_compare( get_bloginfo( 'version' ), '3.8.0', '<' ) ) {
 			screen_icon();
 		}
 
