@@ -30,7 +30,7 @@ msgstr ""
 #: textpattern-importer.php:85
 msgid ""
 "Howdy! This imports categories, users, posts, comments, and links from any "
-"Textpattern 4.0.2+ into this site."
+"Textpattern >= 4.0.2 and <= 4.8.8 into this site."
 msgstr ""
 
 #: textpattern-importer.php:86

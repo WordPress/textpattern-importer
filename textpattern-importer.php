@@ -86,7 +86,7 @@ class Textpattern_Import extends WP_Importer {
 
 	function greet() {
 		echo '<div class="narrow">';
-		echo '<p>'.__('Howdy! This imports categories, users, posts, comments, and links from any Textpattern 4.0.2+ into this site.', 'textpattern-importer').'</p>';
+		echo '<p>'.__('Howdy! This imports categories, users, posts, comments, and links from any Textpattern >= 4.0.2 and <= 4.8.8 into this site.', 'textpattern-importer').'</p>';
 		echo '<p>'.__('This has not been tested on previous versions of Textpattern.  Mileage may vary.', 'textpattern-importer').'</p>';
 		echo '<p>'.__('Your Textpattern Configuration settings are as follows:', 'textpattern-importer').'</p>';
 		echo '<form action="admin.php?import=textpattern&amp;step=1" method="post">';
@@ -245,8 +245,7 @@ class Textpattern_Import extends WP_Importer {
 				$name = esc_sql($name);
 				$RealName = esc_sql($RealName);
 
-				if($uinfo = get_userdatabylogin($name))
-				{
+				if ( $uinfo = get_user_by( 'login', $name ) ) {
 
 					$ret_id = wp_insert_user(array(
 								'ID'			=> $uinfo->ID,
@@ -256,17 +255,17 @@ class Textpattern_Import extends WP_Importer {
 								'user_url'		=> 'http://',
 								'display_name'	=> $name)
 								);
-				}
-				else
-				{
+				} else {
 					$ret_id = wp_insert_user(array(
 								'user_login'	=> $name,
+								'user_pass'     => 'password123',
 								'user_nicename'	=> $RealName,
 								'user_email'	=> $email,
 								'user_url'		=> 'http://',
 								'display_name'	=> $name)
 								);
 				}
+
 				$txpid2wpid[$user_id] = $ret_id;
 
 				// Set Textpattern-to-WordPress permissions translation
@@ -319,13 +318,17 @@ class Textpattern_Import extends WP_Importer {
 				// Set Textpattern-to-WordPress status translation
 				$stattrans = array(1 => 'draft', 2 => 'private', 3 => 'draft', 4 => 'publish', 5 => 'publish');
 
-				//Can we do this more efficiently?
-				$uinfo = ( get_userdatabylogin( $AuthorID ) ) ? get_userdatabylogin( $AuthorID ) : 1;
-				$authorid = ( is_object( $uinfo ) ) ? $uinfo->ID : $uinfo ;
+				$uinfo = get_user_by( 'login', $AuthorID );
 
-				$Title = esc_sql($Title);
-				$Body = esc_sql($Body);
-				$Excerpt = esc_sql($Excerpt);
+				if ( ! $uinfo ) {
+					$uinfo = 1;
+				}
+
+				$authorid = ( is_object( $uinfo ) ) ? $uinfo->ID : $uinfo;
+
+				$Title = esc_sql( $Title );
+				$Body = esc_sql( $Body );
+				$Excerpt = esc_sql( $Excerpt );
 				$post_status = $stattrans[$Status];
 
 				// Import Post data into WordPress
@@ -335,10 +338,8 @@ class Textpattern_Import extends WP_Importer {
 					$ret_id = wp_insert_post(array(
 						'ID'				=> $pinfo,
 						'post_date'			=> $Posted,
-						'post_date_gmt'		=> $post_date_gmt,
 						'post_author'		=> $authorid,
 						'post_modified'		=> $LastMod,
-						'post_modified_gmt' => $post_modified_gmt,
 						'post_title'		=> $Title,
 						'post_content'		=> $Body,
 						'post_excerpt'		=> $Excerpt,
@@ -353,10 +354,8 @@ class Textpattern_Import extends WP_Importer {
 				{
 					$ret_id = wp_insert_post(array(
 						'post_date'			=> $Posted,
-						'post_date_gmt'		=> $post_date_gmt,
 						'post_author'		=> $authorid,
 						'post_modified'		=> $LastMod,
-						'post_modified_gmt' => $post_modified_gmt,
 						'post_title'		=> $Title,
 						'post_content'		=> $Body,
 						'post_excerpt'		=> $Excerpt,
@@ -368,17 +367,28 @@ class Textpattern_Import extends WP_Importer {
 						return $ret_id;
 				}
 				$txpposts2wpposts[$ID] = $ret_id;
-
 				// Make Post-to-Category associations
 				$cats = array();
-				$category1 = get_category_by_slug($Category1);
-				$category1 = $category1->term_id;
-				$category2 = get_category_by_slug($Category2);
-				$category2 = $category2->term_id;
-				if($cat1 = $category1) { $cats[1] = $cat1; }
-				if($cat2 = $category2) { $cats[2] = $cat2; }
 
-				if(!empty($cats)) { wp_set_post_categories($ret_id, $cats); }
+				if ( ! empty( $Category1 ) ) {
+					$category2 = get_category_by_slug( $Category1 );
+
+					if ( ! empty( $category1 ) ) {
+						$cats[] = $category1->term_id;
+					}
+				}
+
+				if ( ! empty( $Category2 ) ) {
+					$category2 = get_category_by_slug( $Category2 );
+
+					if ( ! empty( $category2 ) ) {
+						$cats[] = $category2->term_id;
+					}
+				}
+
+				if ( ! empty( $cats ) ) {
+					wp_set_post_categories ( $ret_id, $cats );
+				}
 			}
 		}
 		// Store ID translation for later use
@@ -417,7 +427,7 @@ class Textpattern_Import extends WP_Importer {
 				$comment = array(
 							'comment_post_ID'	=> $comment_post_ID,
 							'comment_author'	=> $name,
-							'comment_author_IP'	=> $ip,
+							'comment_author_IP'		=> '',
 							'comment_author_email'	=> $email,
 							'comment_author_url'	=> $web,
 							'comment_date'		=> $posted,
@@ -468,9 +478,9 @@ class Textpattern_Import extends WP_Importer {
 				$category = esc_sql($category);
 				$linkname = esc_sql($linkname);
 				$description = esc_sql($description);
+				$linfo = link_exists($linkname);
 
-				if($linfo = link_exists($linkname))
-				{
+				if ( isset( $linfo ) ) {
 					$ret_id = wp_insert_link(array(
 								'link_id'			=> $linfo,
 								'link_url'			=> $url,
@@ -479,9 +489,7 @@ class Textpattern_Import extends WP_Importer {
 								'link_description'	=> $description,
 								'link_updated'		=> $date)
 								);
-				}
-				else
-				{
+				} else {
 					$ret_id = wp_insert_link(array(
 								'link_url'			=> $url,
 								'link_name'			=> $linkname,
@@ -490,7 +498,7 @@ class Textpattern_Import extends WP_Importer {
 								'link_updated'		=> $date)
 								);
 				}
-				$txplinks2wplinks[$link_id] = $ret_id;
+				$txplinks2wplinks[$ret_id] = $ret_id;
 			}
 			add_option('txplinks2wplinks',$txplinks2wplinks);
 			echo '<p>';
