@@ -5,8 +5,8 @@ Plugin URI: http://wordpress.org/extend/plugins/textpattern-importer/
 Description: Import categories, users, posts, comments, and links from a TextPattern blog.
 Author: wordpressdotorg
 Author URI: http://wordpress.org/
-Version: 0.3
-Stable tag: 0.3
+Version: 0.3.1
+Stable tag: 0.3.1
 License: GPL v2 - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
