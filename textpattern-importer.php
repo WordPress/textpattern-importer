@@ -202,8 +202,8 @@ class Textpattern_Import extends WP_Importer {
 
 
 				// Make Nice Variables
-				$name = $wpdb->escape($name);
-				$title = $wpdb->escape($title);
+				$name = esc_sql($name);
+				$title = esc_sql($title);
 
 				if($cinfo = category_exists($name))
 				{
@@ -242,8 +242,8 @@ class Textpattern_Import extends WP_Importer {
 				extract($user);
 
 				// Make Nice Variables
-				$name = $wpdb->escape($name);
-				$RealName = $wpdb->escape($RealName);
+				$name = esc_sql($name);
+				$RealName = esc_sql($RealName);
 
 				if($uinfo = get_userdatabylogin($name))
 				{
@@ -323,9 +323,9 @@ class Textpattern_Import extends WP_Importer {
 				$uinfo = ( get_userdatabylogin( $AuthorID ) ) ? get_userdatabylogin( $AuthorID ) : 1;
 				$authorid = ( is_object( $uinfo ) ) ? $uinfo->ID : $uinfo ;
 
-				$Title = $wpdb->escape($Title);
-				$Body = $wpdb->escape($Body);
-				$Excerpt = $wpdb->escape($Excerpt);
+				$Title = esc_sql($Title);
+				$Body = esc_sql($Body);
+				$Excerpt = esc_sql($Excerpt);
 				$post_status = $stattrans[$Status];
 
 				// Import Post data into WordPress
@@ -409,10 +409,10 @@ class Textpattern_Import extends WP_Importer {
 				$comment_ID = ltrim($discussid, '0');
 				$comment_post_ID = $postarr[$parentid];
 				$comment_approved = (1 == $visible) ? 1 : 0;
-				$name = $wpdb->escape($name);
-				$email = $wpdb->escape($email);
-				$web = $wpdb->escape($web);
-				$message = $wpdb->escape($message);
+				$name = esc_sql($name);
+				$email = esc_sql($email);
+				$web = esc_sql($web);
+				$message = esc_sql($message);
 
 				$comment = array(
 							'comment_post_ID'	=> $comment_post_ID,
@@ -465,9 +465,9 @@ class Textpattern_Import extends WP_Importer {
 				extract($link);
 
 				// Make nice vars
-				$category = $wpdb->escape($category);
-				$linkname = $wpdb->escape($linkname);
-				$description = $wpdb->escape($description);
+				$category = esc_sql($category);
+				$linkname = esc_sql($linkname);
+				$description = esc_sql($description);
 
 				if($linfo = link_exists($linkname))
 				{
@@ -629,39 +629,35 @@ class Textpattern_Import extends WP_Importer {
 		{
 			check_admin_referer('import-textpattern');
 
-			if($_POST['dbuser'])
-			{
+			if ( ! empty( $_POST['dbuser'] ) ) {
 				if(get_option('txpuser'))
 					delete_option('txpuser');
-				add_option('txpuser', sanitize_user($_POST['dbuser'], true));
+				add_option('txpuser', sanitize_user( $_POST['dbuser'], true));
 			}
-			if($_POST['dbpass'])
-			{
+
+			if ( ! empty( $_POST['dbpass'] ) ) {
 				if(get_option('txppass'))
 					delete_option('txppass');
 				add_option('txppass',  sanitize_user($_POST['dbpass'], true));
 			}
 
-			if($_POST['dbname'])
-			{
+			if ( ! empty( $_POST['dbname'] ) ) {
 				if(get_option('txpname'))
 					delete_option('txpname');
 				add_option('txpname',  sanitize_user($_POST['dbname'], true));
 			}
-			if($_POST['dbhost'])
-			{
+
+			if ( ! empty( $_POST['dbhost'] ) ) {
 				if(get_option('txphost'))
 					delete_option('txphost');
 				add_option('txphost',  sanitize_user($_POST['dbhost'], true));
 			}
-			if($_POST['dbprefix'])
-			{
+
+			if ( ! empty( $_POST['dbprefix'] ) ) {
 				if(get_option('tpre'))
 					delete_option('tpre');
 				add_option('tpre',  sanitize_user($_POST['dbprefix']));
 			}
-
-
 		}
 
 		switch ($step)
