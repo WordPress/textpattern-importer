@@ -5,8 +5,8 @@ Plugin URI: http://wordpress.org/extend/plugins/textpattern-importer/
 Description: Import categories, users, posts, comments, and links from a TextPattern blog.
 Author: wordpressdotorg
 Author URI: http://wordpress.org/
-Version: 0.2
-Stable tag: 0.2
+Version: 0.3.1
+Stable tag: 0.3.1
 License: GPL v2 - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
@@ -70,7 +70,11 @@ class Textpattern_Import extends WP_Importer {
 	function header()
 	{
 		echo '<div class="wrap">';
-		screen_icon();
+
+		if ( version_compare( get_bloginfo( 'version' ), '3.8.0', '<' ) ) {
+			screen_icon();
+		}
+
 		echo '<h2>'.__('Import Textpattern', 'textpattern-importer').'</h2>';
 		echo '<p>'.__('Steps may take a few minutes depending on the size of your database. Please be patient.', 'textpattern-importer').'</p>';
 	}
@@ -82,7 +86,7 @@ class Textpattern_Import extends WP_Importer {
 
 	function greet() {
 		echo '<div class="narrow">';
-		echo '<p>'.__('Howdy! This imports categories, users, posts, comments, and links from any Textpattern 4.0.2+ into this site.', 'textpattern-importer').'</p>';
+		echo '<p>'.__('Howdy! This imports categories, users, posts, comments, and links from any Textpattern >= 4.0.2 and <= 4.8.8 into this site.', 'textpattern-importer').'</p>';
 		echo '<p>'.__('This has not been tested on previous versions of Textpattern.  Mileage may vary.', 'textpattern-importer').'</p>';
 		echo '<p>'.__('Your Textpattern Configuration settings are as follows:', 'textpattern-importer').'</p>';
 		echo '<form action="admin.php?import=textpattern&amp;step=1" method="post">';
@@ -198,8 +202,8 @@ class Textpattern_Import extends WP_Importer {
 
 
 				// Make Nice Variables
-				$name = $wpdb->escape($name);
-				$title = $wpdb->escape($title);
+				$name = esc_sql($name);
+				$title = esc_sql($title);
 
 				if($cinfo = category_exists($name))
 				{
@@ -238,11 +242,10 @@ class Textpattern_Import extends WP_Importer {
 				extract($user);
 
 				// Make Nice Variables
-				$name = $wpdb->escape($name);
-				$RealName = $wpdb->escape($RealName);
+				$name = esc_sql($name);
+				$RealName = esc_sql($RealName);
 
-				if($uinfo = get_userdatabylogin($name))
-				{
+				if ( $uinfo = get_user_by( 'login', $name ) ) {
 
 					$ret_id = wp_insert_user(array(
 								'ID'			=> $uinfo->ID,
@@ -252,17 +255,17 @@ class Textpattern_Import extends WP_Importer {
 								'user_url'		=> 'http://',
 								'display_name'	=> $name)
 								);
-				}
-				else
-				{
+				} else {
 					$ret_id = wp_insert_user(array(
 								'user_login'	=> $name,
+								'user_pass'     => 'password123',
 								'user_nicename'	=> $RealName,
 								'user_email'	=> $email,
 								'user_url'		=> 'http://',
 								'display_name'	=> $name)
 								);
 				}
+
 				$txpid2wpid[$user_id] = $ret_id;
 
 				// Set Textpattern-to-WordPress permissions translation
@@ -315,13 +318,17 @@ class Textpattern_Import extends WP_Importer {
 				// Set Textpattern-to-WordPress status translation
 				$stattrans = array(1 => 'draft', 2 => 'private', 3 => 'draft', 4 => 'publish', 5 => 'publish');
 
-				//Can we do this more efficiently?
-				$uinfo = ( get_userdatabylogin( $AuthorID ) ) ? get_userdatabylogin( $AuthorID ) : 1;
-				$authorid = ( is_object( $uinfo ) ) ? $uinfo->ID : $uinfo ;
+				$uinfo = get_user_by( 'login', $AuthorID );
 
-				$Title = $wpdb->escape($Title);
-				$Body = $wpdb->escape($Body);
-				$Excerpt = $wpdb->escape($Excerpt);
+				if ( ! $uinfo ) {
+					$uinfo = 1;
+				}
+
+				$authorid = ( is_object( $uinfo ) ) ? $uinfo->ID : $uinfo;
+
+				$Title = esc_sql( $Title );
+				$Body = esc_sql( $Body );
+				$Excerpt = esc_sql( $Excerpt );
 				$post_status = $stattrans[$Status];
 
 				// Import Post data into WordPress
@@ -331,10 +338,8 @@ class Textpattern_Import extends WP_Importer {
 					$ret_id = wp_insert_post(array(
 						'ID'				=> $pinfo,
 						'post_date'			=> $Posted,
-						'post_date_gmt'		=> $post_date_gmt,
 						'post_author'		=> $authorid,
 						'post_modified'		=> $LastMod,
-						'post_modified_gmt' => $post_modified_gmt,
 						'post_title'		=> $Title,
 						'post_content'		=> $Body,
 						'post_excerpt'		=> $Excerpt,
@@ -349,10 +354,8 @@ class Textpattern_Import extends WP_Importer {
 				{
 					$ret_id = wp_insert_post(array(
 						'post_date'			=> $Posted,
-						'post_date_gmt'		=> $post_date_gmt,
 						'post_author'		=> $authorid,
 						'post_modified'		=> $LastMod,
-						'post_modified_gmt' => $post_modified_gmt,
 						'post_title'		=> $Title,
 						'post_content'		=> $Body,
 						'post_excerpt'		=> $Excerpt,
@@ -364,17 +367,28 @@ class Textpattern_Import extends WP_Importer {
 						return $ret_id;
 				}
 				$txpposts2wpposts[$ID] = $ret_id;
-
 				// Make Post-to-Category associations
 				$cats = array();
-				$category1 = get_category_by_slug($Category1);
-				$category1 = $category1->term_id;
-				$category2 = get_category_by_slug($Category2);
-				$category2 = $category2->term_id;
-				if($cat1 = $category1) { $cats[1] = $cat1; }
-				if($cat2 = $category2) { $cats[2] = $cat2; }
 
-				if(!empty($cats)) { wp_set_post_categories($ret_id, $cats); }
+				if ( ! empty( $Category1 ) ) {
+					$category2 = get_category_by_slug( $Category1 );
+
+					if ( ! empty( $category1 ) ) {
+						$cats[] = $category1->term_id;
+					}
+				}
+
+				if ( ! empty( $Category2 ) ) {
+					$category2 = get_category_by_slug( $Category2 );
+
+					if ( ! empty( $category2 ) ) {
+						$cats[] = $category2->term_id;
+					}
+				}
+
+				if ( ! empty( $cats ) ) {
+					wp_set_post_categories ( $ret_id, $cats );
+				}
 			}
 		}
 		// Store ID translation for later use
@@ -405,15 +419,15 @@ class Textpattern_Import extends WP_Importer {
 				$comment_ID = ltrim($discussid, '0');
 				$comment_post_ID = $postarr[$parentid];
 				$comment_approved = (1 == $visible) ? 1 : 0;
-				$name = $wpdb->escape($name);
-				$email = $wpdb->escape($email);
-				$web = $wpdb->escape($web);
-				$message = $wpdb->escape($message);
+				$name = esc_sql($name);
+				$email = esc_sql($email);
+				$web = esc_sql($web);
+				$message = esc_sql($message);
 
 				$comment = array(
 							'comment_post_ID'	=> $comment_post_ID,
 							'comment_author'	=> $name,
-							'comment_author_IP'	=> $ip,
+							'comment_author_IP'		=> '',
 							'comment_author_email'	=> $email,
 							'comment_author_url'	=> $web,
 							'comment_date'		=> $posted,
@@ -461,12 +475,12 @@ class Textpattern_Import extends WP_Importer {
 				extract($link);
 
 				// Make nice vars
-				$category = $wpdb->escape($category);
-				$linkname = $wpdb->escape($linkname);
-				$description = $wpdb->escape($description);
+				$category = esc_sql($category);
+				$linkname = esc_sql($linkname);
+				$description = esc_sql($description);
+				$linfo = link_exists($linkname);
 
-				if($linfo = link_exists($linkname))
-				{
+				if ( isset( $linfo ) ) {
 					$ret_id = wp_insert_link(array(
 								'link_id'			=> $linfo,
 								'link_url'			=> $url,
@@ -475,9 +489,7 @@ class Textpattern_Import extends WP_Importer {
 								'link_description'	=> $description,
 								'link_updated'		=> $date)
 								);
-				}
-				else
-				{
+				} else {
 					$ret_id = wp_insert_link(array(
 								'link_url'			=> $url,
 								'link_name'			=> $linkname,
@@ -486,7 +498,7 @@ class Textpattern_Import extends WP_Importer {
 								'link_updated'		=> $date)
 								);
 				}
-				$txplinks2wplinks[$link_id] = $ret_id;
+				$txplinks2wplinks[$ret_id] = $ret_id;
 			}
 			add_option('txplinks2wplinks',$txplinks2wplinks);
 			echo '<p>';
@@ -625,39 +637,35 @@ class Textpattern_Import extends WP_Importer {
 		{
 			check_admin_referer('import-textpattern');
 
-			if($_POST['dbuser'])
-			{
+			if ( ! empty( $_POST['dbuser'] ) ) {
 				if(get_option('txpuser'))
 					delete_option('txpuser');
-				add_option('txpuser', sanitize_user($_POST['dbuser'], true));
+				add_option('txpuser', sanitize_user( $_POST['dbuser'], true));
 			}
-			if($_POST['dbpass'])
-			{
+
+			if ( ! empty( $_POST['dbpass'] ) ) {
 				if(get_option('txppass'))
 					delete_option('txppass');
 				add_option('txppass',  sanitize_user($_POST['dbpass'], true));
 			}
 
-			if($_POST['dbname'])
-			{
+			if ( ! empty( $_POST['dbname'] ) ) {
 				if(get_option('txpname'))
 					delete_option('txpname');
 				add_option('txpname',  sanitize_user($_POST['dbname'], true));
 			}
-			if($_POST['dbhost'])
-			{
+
+			if ( ! empty( $_POST['dbhost'] ) ) {
 				if(get_option('txphost'))
 					delete_option('txphost');
 				add_option('txphost',  sanitize_user($_POST['dbhost'], true));
 			}
-			if($_POST['dbprefix'])
-			{
+
+			if ( ! empty( $_POST['dbprefix'] ) ) {
 				if(get_option('tpre'))
 					delete_option('tpre');
 				add_option('tpre',  sanitize_user($_POST['dbprefix']));
 			}
-
-
 		}
 
 		switch ($step)
