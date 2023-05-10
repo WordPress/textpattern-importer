@@ -3,8 +3,8 @@ Contributors: wordpressdotorg
 Donate link:
 Tags: importer, textpattern
 Requires at least: 3.0
-Tested up to: 6.1
-Stable tag: 0.3.1
+Tested up to: 6.2
+Stable tag: 0.3.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -25,6 +25,9 @@ Import categories, users, posts, comments, and links from a TextPattern blog.
 == Screenshots ==
 
 == Changelog ==
+
+= 0.3.2 =
+* Testing the plugin up to WordPress 6.2
 
 = 0.3.1 =
 * Add support for TextPattern >= 4.0.2 and <= 4.8.8
