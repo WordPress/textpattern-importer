@@ -179,7 +179,7 @@ msgstr ""
 msgid ""
 "Also, since you&#8217;re coming from Textpattern, you probably have been "
 "using Textile to format your comments and posts.  If this is the case, we "
-"recommend downloading and installing <a href=\"http://www.huddledmasses.org/"
+"recommend downloading and installing <a href=\"https://www.huddledmasses.org/"
 "category/development/wordpress/textile/\">Textile for WordPress</a>.  Trust "
 "me... You&#8217;ll want it."
 msgstr ""
@@ -195,17 +195,17 @@ msgid ""
 msgstr ""
 
 #: textpattern-importer.php:602
-msgid "<a href=\"http://wordpress.org/\">The official WordPress site</a>"
+msgid "<a href=\"https://wordpress.org/\">The official WordPress site</a>"
 msgstr ""
 
 #: textpattern-importer.php:603
 msgid ""
-"<a href=\"http://wordpress.org/support/\">The WordPress support forums</a>"
+"<a href=\"https://wordpress.org/support/\">The WordPress support forums</a>"
 msgstr ""
 
 #: textpattern-importer.php:604
 msgid ""
-"<a href=\"http://codex.wordpress.org/\">The Codex (In other words, the "
+"<a href=\"https://codex.wordpress.org/\">The Codex (In other words, the "
 "WordPress Bible)</a>"
 msgstr ""
 
@@ -251,7 +251,7 @@ msgid "TextPattern Importer"
 msgstr ""
 
 #. Plugin URI of the plugin/theme
-msgid "http://wordpress.org/extend/plugins/textpattern-importer/"
+msgid "https://wordpress.org/extend/plugins/textpattern-importer/"
 msgstr ""
 
 #. Author of the plugin/theme
@@ -259,5 +259,5 @@ msgid "wordpressdotorg"
 msgstr ""
 
 #. Author URI of the plugin/theme
-msgid "http://wordpress.org/"
+msgid "https://wordpress.org/"
 msgstr ""
