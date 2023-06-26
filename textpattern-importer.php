@@ -1,13 +1,13 @@
 <?php
 /*
 Plugin Name: TextPattern Importer
-Plugin URI: http://wordpress.org/extend/plugins/textpattern-importer/
+Plugin URI: https://wordpress.org/extend/plugins/textpattern-importer/
 Description: Import categories, users, posts, comments, and links from a TextPattern blog.
 Author: wordpressdotorg
-Author URI: http://wordpress.org/
+Author URI: https://wordpress.org/
 Version: 0.3.2
 Stable tag: 0.3.2
-License: GPL v2 - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+License: GPL v2 - https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
 if ( !defined('WP_LOAD_IMPORTERS') )
@@ -252,7 +252,7 @@ class Textpattern_Import extends WP_Importer {
 								'user_login'	=> $name,
 								'user_nicename'	=> $RealName,
 								'user_email'	=> $email,
-								'user_url'		=> 'http://',
+								'user_url'		=> 'https://',
 								'display_name'	=> $name)
 								);
 				} else {
@@ -261,7 +261,7 @@ class Textpattern_Import extends WP_Importer {
 								'user_pass'     => 'password123',
 								'user_nicename'	=> $RealName,
 								'user_email'	=> $email,
-								'user_url'		=> 'http://',
+								'user_url'		=> 'https://',
 								'display_name'	=> $name)
 								);
 				}
@@ -606,9 +606,9 @@ class Textpattern_Import extends WP_Importer {
 		echo '<h3>'.__('WordPress Resources', 'textpattern-importer').'</h3>';
 		echo '<p>'.__('Finally, there are numerous WordPress resources around the internet.  Some of them are:', 'textpattern-importer').'</p>';
 		echo '<ul>';
-		echo '<li>'.__('<a href="http://wordpress.org/">The official WordPress site</a>', 'textpattern-importer').'</li>';
-		echo '<li>'.__('<a href="http://wordpress.org/support/">The WordPress support forums</a>', 'textpattern-importer').'</li>';
-		echo '<li>'.__('<a href="http://codex.wordpress.org/">The Codex (In other words, the WordPress Bible)</a>', 'textpattern-importer').'</li>';
+		echo '<li>'.__('<a href="https://wordpress.org/">The official WordPress site</a>', 'textpattern-importer').'</li>';
+		echo '<li>'.__('<a href="https://wordpress.org/support/">The WordPress support forums</a>', 'textpattern-importer').'</li>';
+		echo '<li>'.__('<a href="https://codex.wordpress.org/">The Codex (In other words, the WordPress Bible)</a>', 'textpattern-importer').'</li>';
 		echo '</ul>';
 		echo '<p>'.sprintf(__('That&#8217;s it! What are you waiting for? Go <a href="%1$s">log in</a>!', 'textpattern-importer'), get_bloginfo( 'wpurl' ) . '/wp-login.php').'</p>';
 	}
